@@ -678,7 +678,9 @@ external min:
 external randBetween:
   (
     [@bs.unwrap] [ | `String(string) | `Int(int) | `BigInt(t)],
-    [@bs.unwrap] [ | `String(string) | `Int(int) | `BigInt(t)]
+    [@bs.unwrap] [ | `String(string) | `Int(int) | `BigInt(t)],
+    ~func: (. unit) => float=?,
+    unit
   ) =>
   t =
   "randBetween";

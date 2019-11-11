@@ -20,7 +20,7 @@ There are even some minor improvements, such as variant types for comparison ope
 
 However, there is no in-library error handling! In particular, if you do something crazy with the `String(string) polymorphic argument, you may see runtime errors unless you catch and handle them:
 
-```ReasonMl
+```reason
 let x = BigInteger.bigInt(`String("IAmNotANumber"));
 Js.log("I am unreachable due to an unhandled type error above");
 ```
@@ -28,7 +28,7 @@ Js.log("I am unreachable due to an unhandled type error above");
 Add as much error handling to your own code as you think appropriate given your use case, for example:
 
 ### Option variant
-```ReasonMl
+```reason
 let x =
   try (Some(BigInteger.bigInt(`String("IAmNotAValidNumber")))) {
   | _ => None
@@ -42,7 +42,7 @@ switch (x) {
 ```
 
 ### Belt.Result (polymorphic variant error type)
-```ReasonMl
+```reason
 let suspiciousFunction = stringOfInt =>
   try (Belt.Result.Ok(BigInteger.bigInt(`String(stringOfInt)))) {
   | Js.Exn.Error(e) =>
@@ -78,7 +78,7 @@ suspiciousFunction("777")->handleResult;
 
 For convenience, this library exports `exception BigIntegerException`.  You should prefer the other options above though! 
 
-```ReasonMl
+```reason
 let suspiciousFunction = stringOfInt =>
   try (BigInteger.bigInt(`String(stringOfInt))) {
   | _ => raise(BigInteger.BigIntegerException)

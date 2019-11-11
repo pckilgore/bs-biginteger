@@ -1,17 +1,24 @@
 {
   "name": "@pckilgore/bs-biginteger",
-  "version": "0.1.0",
+  "version": "1.0.0-alpha",
   "scripts": {
     "clean": "bsb -clean-world",
     "build": "bsb -make-world",
-    "watch": "bsb -make-world -w",
-    "test": "node src/Scratch.bs.js"
+    "watch": "bsb -make-world -w"
   },
+  "private": false,
+  "main": "description": "Bucklescript bindings for BigInteger.js",
   "keywords": [
-    "BuckleScript"
+    "BuckleScript",
+    "BigInteger",
+    "BigInt",
+    "ReasonML:"
   ],
-  "author": "",
-  "license": "MIT",
+  "homepage": "https://github.com/pckilgore/bs-biginteger",
+  "repository": "https://github.com/pckilgore/bs-biginteger",
+  "bugs": "https://github.com/pckilgore/bs-biginteger/issues",
+  "author": "Patrick Kilgore",
+  "license": "Unlicense",
   "devDependencies": {
     "bs-platform": "^5.2.1"
   },
