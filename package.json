@@ -7,7 +7,8 @@
     "watch": "bsb -make-world -w"
   },
   "private": false,
-  "main": "description": "Bucklescript bindings for BigInteger.js",
+  "main": "src/BigInteger.bs.js",
+  "description": "Bucklescript bindings for BigInteger.js",
   "keywords": [
     "BuckleScript",
     "BigInteger",
