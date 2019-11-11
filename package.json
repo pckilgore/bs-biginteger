@@ -1,6 +1,6 @@
 {
   "name": "@pckilgore/bs-biginteger",
-  "version": "1.0.0-alpha",
+  "version": "1.0.0-alpha3",
   "scripts": {
     "clean": "bsb -clean-world",
     "build": "bsb -make-world",
@@ -25,8 +25,5 @@
   },
   "peerDependencies": {
     "big-integer": "1.6.x"
-  },
-  "dependencies": {
-    "big-integer": "^1.6.47"
   }
 }
