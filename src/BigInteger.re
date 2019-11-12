@@ -1,38 +1,43 @@
 //*
-// Why all the comments?  Well, this was all confusing as hell when I started
-// learning ReasonMl and bucklescript and so I wanted and example to show people
-// a bindings project that explains exactly what's happening for beginners
+// Why all the comments?  Well, typing libraries was confusing as hell when I
+// started learning ReasonML and Bucklescript and so I wanted an example to
+// show new developers that explains exactly what's happening for beginners
 // coming from a Javascript background.
-//
-// That said, because this is for begginers, I'll probably sometimes say things
-// that aren't 100% accurate, but that I know might clarify a concept more
-// immediately than the real dirty answer.
-//
-// To the learners, I apologise for this shortcut and encourage you to question
-// my analogies.  To the experienced, sorry.
 //
 // ***I am assuming you have a fairly basic knowledge of Reason syntax and
 // concepts like pattern matching, variants, and options.***
+//
+// That said, because this is for beginners, I'll probably sometimes say things
+// that aren't 100% accurate, but that I know might clarify a concept more
+// immediately than the real, detailed answer.
+//
+// To the learners, I apologize for this shortcut and encourage you to question
+// my analogies.  To the experienced, I'm just sorry, but if you feel I'm
+// seriously misleading someone please let me know!
+//
+// If you have any questions file an issue!  Or find me on the ReasonML discord
+// @pckilgore#5005
 ///
 
 //*
+type t;
 // What is `type t`?
 //
 // It is a ocaml convention for "the type of this module".  So if the module was
 // named "Fish", `type t` would be the fish.  We could just as easily call it
 // anything else, even `type fish`, but then we'd be referring to it as
 // `Fish.fish` which seems silly, right? So we call it `type t` and refer to it
-// as `Fish.t` and by convension know `t` means the module's type.
+// as `Fish.t` and by convention know `t` means the module's type.
 //
-// An ReasonML module is a type packaged with it's behavior.  In this way, it is
-// similar to an OOP language's class.
+// A ReasonML module is a type packaged with its behavior.  In this way, it is
+// similar to an Object-Oriented language's concept of `class`.
 //
 // So here, `type t` is the BigInteger data structure, packaged with the methods
-// we can use on and with that type.
+// we can to operate on that type.
 //
 // Because we don't really know (or, honestly, care) about _how_ the BigInteger
 // library implements the BigInteger type, we just declare it here, which means
-// it is an "abstract type", which I alwasy think of as, "a type that must be
+// it is an "abstract type", which I always think of as, "a type that must be
 // used consistently by the functions that operate on it, but for which the
 // particular implementation of the type and those functions are assumed to be
 // correct".
@@ -40,33 +45,75 @@
 // See below around the definition of `external abs` for an example of a
 // non-abstract type t.
 //
-// */
-type t;
+///
 
 //*
+exception BigIntegerException;
 // What is this?  In Reason, exceptions are a special type of variant.  This
-// libary doesn't actually handle them for it's consumers, but to be nice,
+// library doesn't actually handle them for it's consumers, but to be nice,
 // I declare this type here so that users of this library, should they want to
 // handler errors themselves, can have a consistent way of communicating that
 // fact to consumers of their code.
 //
-// See the readme for an easy way to handle errors that relies on regular
-// variants (not exceptions!) instead.
+// Because a module might have multiple exceptions, we try to pick descriptive
+// names for them.  This name isn't very descriptive! But really, that's OK
+// because there are better ways to handle unexpected actions in a strongly
+// typed language like ReasonML: variants!
 //
-// You probably don't need exceptions! Variants are way better and we can catch
-// errors and create them just as easily as exceptions.
-//
-// It's named exception for the same reason we call the module type t.
+// See the README for examples of other ways to handle errors in your code.
+// Those examples apply to all sorts of libraries!
 ///
-exception BigIntegerException;
 
 //*
-// Construct a new BigInteger (type t!!) with Base 10.
+// The function below constructs a new BigInteger (of type t) with Base 10.
 //
-// Note that I chose not to support all four arguments documented in this
-// library.  This function allows creation of a new BigInteger (type t) from
-// a polymorphic variant that describes its type and carries a value of that
-// type.  The library defaults to base 10 for this operation.
+// Type signature is outside the scope of this explanation, but to break it
+// down just this one time:
+//
+// | [@bs.module] ... = "big-integer" |
+// ------------------------------------
+//   Tells Bucklescript there is a module you need to import called
+//   "big-integer"
+//
+// | bigInt |
+// ----------
+//   Tells bucklescript that the "big-integer" module should be called
+//   "bigInt".  In connection with the syntax above, this compiles to
+//   `var bigInt = require('big-integer')`
+//
+// | bigInt: typeA => typeB |
+// --------------------------
+//   Tells bucklescript that bigInt is a function that takes an argument of
+//   typeA and that it returns typeB.  Note that typeA and typeB aren't
+//   actually the types below, just examples.  See below for the actual type.
+//
+// | ( [@bs.unwrap] ... ) |
+// ------------------------
+//   Tells bucklescript the type of the first (and only) argument to the bigInt
+//   function is polymorphic (can be multiple types).  Tells Bucklescript to
+//   expect a polymorphic variant next that describes all these types.
+//
+//  | [ | `String(string) | `Int(int) | `BigInt(t)] |
+//  -------------------------------------------------
+//    The polymorphic variant.  Note, I could have just as easily called these
+//    [ | `Apple(string) | `Banana(int) | `Pear(t) ].  It is the type that is
+//    in the constructor, e.g., `(string)`, that is important.  [@bs.unwrap]
+//    tells Bucklescript to "unwrap" these variants during compilation to
+//    javascript to the type in the constructor.  This lets the compiler
+//    type-check your Reason code, but compile to clean, efficient javascript.
+//
+//  | => t |
+//  --------
+//    Tells bucklescript bigInt returns type t. See above about type t.
+//    (I know this feels a little circular, and not very descriptive. But
+//    remember type names are arbitrary.  We could have declared `type
+//    bigInteger` above.  And then this would be `=> bigInteger` rather than
+//    `=> t`.  But then in other Reason modules, we would see this type as
+//    `BigInteger.bigInteger` (BigInteger is the module name, which comes from
+//    the file name--in Reason all files are modules, but not all modules are
+//    files).  Since that's rather verbose, we say `type t`, knowing that it
+//    will be namespaced by the type system to `BigInteger.t` and that will be
+//    clear to other programmers by convention.
 //
 ///
 
@@ -83,13 +130,17 @@ external bigInt:
 //
 // It's hard to model javascript in Reason, particularly because arguments can
 // be multiple types or completely optional.  There's lots of strategies to deal
-// with this, documents in the "Functions" section of the Bucklescript docs.
+// with this, described in the "Functions" section of the Bucklescript docs.
 //
-// Here, I chose to create separate entry points to creating a BigInt.  The
-// default base10 above, and this one, which allows you to chose a different
-// base.  This is an entirely abritrary constraint, and we can extend these
-// bindings should the need arise!
+// Note that I chose not to support all four arguments documented for bigInt
+// (base, alphabet, etc...). That was an arbitrary design decision. But we model
+// higher-arity functions like this in a few different ways:
 //
+//  * Define X functions separately, where X is the number of arguments. I do
+//    that here with two functions (bigInt and bigIntBaseN).
+//
+//  * Define one function with optional arguments and defaults.  I do that below
+//    for the `fromArray` function.
 ///
 
 /**
@@ -105,32 +156,16 @@ external bigIntBaseN:
   "big-integer";
 
 //*
-// What is this "unit"?? Unit is a type that is a part of ReasonML, ocaml.  It
-// means, depending on context "void" (a function can return unit) or
-// "intentionally empty" (if used as the type of an argument.)
-//
-// The characters `()` and the word `unit` represent the same thing, but are
-// used in different ways.  It's not clear to me, why, yet, but I tend to use
-// `unit` when declaring type and `()` when I'm performing operations.
-//
-///
-
-/**
- * Returns the absolute value of a bigInt.
- */
-[@bs.send]
-external abs: (t, unit) => t = "abs";
-
-//*
-// This is how you model object methods in Bucklescript.  Search for "bs.send"
-// in the Bucklescript docs for details.
+// [@bs.send] is how we tell bucklescript the external we are defining should
+// be chained off the first argument to the function we are defining.  This is
+// how you model object methods in Bucklescript.
 //
 // Because this is a functional language, we do not carry state around like an
 // object might.  Rather, we choose what data we want to keep, type it, and then
 // define operations on it (usually immutably).
 //
 // Remember the fish example above?  Maybe we want that fish to swim. Swim is a
-// _behavior_ of the type Fish (`Fish.t`). In a _real_ ReasonMl module it would
+// _behavior_ of the type Fish (`Fish.t`). In a _real_ ReasonML module it would
 // look like:
 //
 // module Fish = {
@@ -145,7 +180,27 @@ external abs: (t, unit) => t = "abs";
 // --ASIDE---
 // Wait, why is `t` before `howFar`, I thought I read somewhere that....
 //   ^^ https://www.javierchavarri.com/data-first-and-data-last-a-comparison/
+// --END ASIDE--
+//
+// This is best explained via code example:
+//
+// So we can call, from reason:
+// ```reason
+// let x = BigInteger.bigInt(`Int(-10)); // assigns x to BigInteger.t of -10n
+// let y = BigInteger.abs(x); // assigns y to BigInteger.t of 10n
+// ```
+// and it compiles to, roughly:
+// ```javascript
+// var x = bigInt(-10); // -10n
+// var y = x.abs(); // 10n
+// ```
 ///
+
+/**
+ * Returns the absolute value of a bigInt.
+ */
+[@bs.send]
+external abs: t => t = "abs";
 
 /**
  * Performs addition.
@@ -157,7 +212,7 @@ external add:
 
 //*
 // Why `and_` and not `and`? Because `and` is a reserved word so we _have_ to
-// change the name of this function, and by convention we use an `_` suffix.
+// change the name of this function, and by convention we use a `_` suffix.
 ///
 
 /**
@@ -197,11 +252,16 @@ type compareResult =
 external _compare:
   (t, [@bs.unwrap] [ | `String(string) | `Int(int) | `BigInt(t)]) => int =
   "compare";
-// Then we wrap the function for our users:
+// Then we wrap the function for our users (below).
+//
+// this doesn't _really_ hide the function (you can still call
+// BigInteger._compare from another module if you want.).  Thats fine, and
+// I want to give users that option.  But you can define an "interface" file
+// if you truly want to hide implementation details from consumers.
 ///
 
 /**
- * Performs a comparison between two numbers. Returns variant:
+ * Performs a comparison between two numbers. Returns a variant:
  *   * first number > second number => GreaterThan
  *   * first number < second number => LessThan
  *   * first number == second number => EqualTo
@@ -261,11 +321,11 @@ type divmodResult = {
   quotient: t,
   remainder: t,
 };
-// Recall type t above is just a BigInteger.t.
+// Recall `: t` above is just a `type t` or BigInteger.t.
 //
 // There are less verbose options here, but let's define bucklescript getters
 // for the properties we want.
-//  Warning! Things like this _CAN RESULT IT TYPE ERRORS_, so avoid it unless
+//  Warning! Things like this _CAN RESULT IN TYPE ERRORS_, so avoid it unless
 //  you need to.
 [@bs.get] external getQuotient: divmodResult => t = "quotient";
 //                 ^^-func name ^^-type it works on ^^-name of js property
@@ -524,7 +584,7 @@ external _toArray:
 
 /**
  * Converts a bigInt into an object with the properties "value" and
- * "isNegative." "Value" is an array of integers modulo the given radix.
+ * "isNegative." "Value" is `type array(int)` modulo the given radix.
  * "isNegative" is a boolean that represents the sign of the result.
  *
  *   - BigInteger.toArray(BigInteger.bigInt(`String("1e9")), `Int(10)) => {
@@ -670,6 +730,18 @@ external min:
   ) =>
   t =
   "min";
+
+//*
+// What is this "unit"?? Unit is a type that is a part of ReasonML, ocaml.  It
+// means, depending on context "void" (a function can return unit) or
+// "intentionally empty" (if used as the type of an argument.)
+//
+// The characters `()` and the word `unit` represent the same thing, but are
+// used in different ways.  I think of `unit` as the type name and `()` as a way
+// of creating `type unit`.
+//
+// the (. ) below tells bucklescript not to curry this function.
+///
 
 /**
  * Returns a random number between `min` and `max`.
