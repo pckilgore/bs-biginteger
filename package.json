@@ -21,7 +21,7 @@
   "author": "Patrick Kilgore",
   "license": "Unlicense",
   "devDependencies": {
-    "bs-platform": "^5.2.1"
+    "bs-platform": "5.2.1"
   },
   "peerDependencies": {
     "big-integer": "1.6.x"

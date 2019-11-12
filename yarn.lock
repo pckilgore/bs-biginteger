@@ -2,11 +2,6 @@
 # yarn lockfile v1
 
 
-big-integer@^1.6.47:
-  version "1.6.47"
-  resolved "https://registry.npmjs.org/big-integer/-/big-integer-1.6.47.tgz#e1e9320e26c4cc81f64fbf4b3bb20e025bf18e2d"
-  integrity sha512-9t9f7X3as2XGX8b52GqG6ox0GvIdM86LyIXASJnDCFhYNgt+A+MByQZ3W2PyMRZjEvG5f8TEbSPfEotVuMJnQg==
-
 bs-platform@^5.2.1:
   version "5.2.1"
   resolved "https://registry.npmjs.org/bs-platform/-/bs-platform-5.2.1.tgz#3f76f6d4f4c7255296375a8104c8be332770b691"
