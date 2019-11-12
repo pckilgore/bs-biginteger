@@ -1,5 +1,7 @@
 ## bs-BigInteger.js
 
+[![npm version](https://badge.fury.io/js/%40pckilgore%2Fbs-biginteger.svg)](https://badge.fury.io/js/%40pckilgore%2Fbs-biginteger)
+
 [BuckleScript](https://github.com/bloomberg/bucklescript) bindings over [BigInteger.js](https://github.com/peterolson/BigInteger.js)@1.6.x
 
 ## How do I use this?
