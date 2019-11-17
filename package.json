@@ -1,29 +1,37 @@
 {
   "name": "@pckilgore/bs-biginteger",
+  "private": false,
   "version": "1.0.0-alpha5",
   "scripts": {
     "clean": "bsb -clean-world",
     "build": "bsb -make-world",
     "watch": "bsb -make-world -w"
   },
-  "private": false,
-  "main": "src/BigInteger.bs.js",
   "description": "Bucklescript bindings for BigInteger.js",
   "keywords": [
     "BuckleScript",
     "BigInteger",
+    "BigInteger.js",
+    "big-integer",
+    "math",
     "BigInt",
     "ReasonML"
   ],
-  "homepage": "https://github.com/pckilgore/bs-biginteger",
-  "repository": "https://github.com/pckilgore/bs-biginteger",
-  "bugs": "https://github.com/pckilgore/bs-biginteger/issues",
+  "homepage": "https://github.com/pckilgore/bs-biginteger#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pckilgore/bs-biginteger"
+  },
+  "bugs": {
+    "url": "https://github.com/pckilgore/bs-biginteger/issues"
+  },
   "author": "Patrick Kilgore",
   "license": "Unlicense",
   "devDependencies": {
-    "bs-platform": "5.2.1"
+    "bs-platform": "^6.2.1"
   },
   "peerDependencies": {
-    "big-integer": "1.6.x"
+    "big-integer": "1.6.x",
+    "bs-platform": "^6.2.1"
   }
 }

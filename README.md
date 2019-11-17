@@ -9,14 +9,16 @@
 For specifics, see the [documentation for BigInteger@1.6.47, from which this library was based](https://www.npmjs.com/package/big-integer/v/1.6.47).
 
 ## Status
-As far as I am aware, all methods from version 1.6.47 are supported, to some extent.  
+
+As far as I am aware, all methods from version 1.6.47 are supported, to some extent.
 
 Notable omissions are:
- * *the constructor* (does not support alphabet or caseSensitive arguments).
- * `isProbablePrime` (does not support iterations or rng arguments)
- * `isInstance` (we have a type checker!!!!)
- * `randBetween` (does not support rng argument)
- * `toString` (does not support alphabet argument)
+
+- _the constructor_ (does not support alphabet or caseSensitive arguments).
+- `isProbablePrime` (does not support iterations or rng arguments)
+- `isInstance` (we have a type checker!!!!)
+- `randBetween` (does not support rng argument)
+- `toString` (does not support alphabet argument)
 
 There are even some minor improvements, such as variant types for comparison operations, rather than `-1`, `0`, `1`.
 
@@ -30,6 +32,7 @@ Js.log("I am unreachable due to an unhandled type error above");
 Add as much error handling to your own code as you think appropriate given your use case, for example:
 
 ### Option variant
+
 ```reason
 let x =
   try (Some(BigInteger.bigInt(`String("IAmNotAValidNumber")))) {
@@ -44,6 +47,7 @@ switch (x) {
 ```
 
 ### Belt.Result (polymorphic variant error type)
+
 ```reason
 let suspiciousFunction = stringOfInt =>
   try (Belt.Result.Ok(BigInteger.bigInt(`String(stringOfInt)))) {
@@ -78,7 +82,7 @@ suspiciousFunction("777")->handleResult;
 
 ### Exception
 
-For convenience, this library exports `exception BigIntegerException`.  You should prefer the other options above though! 
+For convenience, this library exports `exception BigIntegerException`. You should prefer the other options above though!
 
 ```reason
 let suspiciousFunction = stringOfInt =>
@@ -100,5 +104,27 @@ switch (suspiciousFunction("777")) {
 
 ```
 
+## Installation
+
+```console
+$ yarn add @pckilgore/bs-biginteger
+```
+
+or
+
+```console
+$ npm install @pckilgore/bs-biginteger
+```
+
+Then add @pckilgore/bs-biginteger to bs-dependencies in your bsconfig.json:
+
+```jsonc
+{
+  /* rest of file ... */
+  "bs-dependencies": ["@pckilgore/bs-biginteger"]
+}
+```
+
 # Contributing
+
 Contributions are welcome, especially for the small portions of this library that lacks coverage by typings.
