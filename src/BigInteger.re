@@ -769,13 +769,13 @@ external valueOf: t => int = "valueOf";
  * Internal BigInteger.toString
  */
 [@bs.send]
-external _toString: (t, int) => int = "toString";
+external _toString: (t, int) => string = "toString";
 
 /**
- * Converts a bigInt to a native Javascript number. Converts a bigInt to a
- * string. There is an optional radix parameter (which **defaults to 10**) that
- * converts the number to the given radix. Digits in the range `10-35` will use
- * the letters `a-z`. Bases larger than 36 are supported. If a digit is greater
- * than or equal to 36, it will be enclosed in angle brackets.
+ * Converts a bigInt to a string. There is an optional radix parameter
+ * (which **defaults to 10**) that converts the number to the given radix.
+ * Digits in the range `10-35` will use the letters `a-z`. Bases larger
+ * than 36 are supported. If a digit is greater  * than or equal to 36,
+ * it will be enclosed in angle brackets.
  */
 let toString = (t, ~base=10, ()) => _toString(t, base);
