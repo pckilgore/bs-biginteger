@@ -231,8 +231,8 @@ external and_:
 external bitLength: t => t = "bitLength";
 
 //*
-// Why the _ prefix ? Just signaling this is a private message.  We're going to
-// be nice here and wrap this function's result in a variant.  If we typed it
+// Why the _ prefix ? Just signaling that `_compare` is "private".  We're going
+// to be nice here and wrap this function's result in a variant.  If we typed it
 // as a int, it would work, but the compiler would be confused (we only assign
 // value to a -1, 0, 1.  And so it would ask consumers of this library to handle
 // the case of any other possible number (even though we know that's impossible
@@ -257,7 +257,8 @@ external _compare:
 // this doesn't _really_ hide the function (you can still call
 // BigInteger._compare from another module if you want.).  Thats fine, and
 // I want to give users that option.  But you can define an "interface" file
-// if you truly want to hide implementation details from consumers.
+// if you truly want to hide implementation details from consumers. You
+// might see these in other projects, with the `.rei` extension.
 ///
 
 /**
@@ -331,7 +332,7 @@ type divmodResult = {
 //                 ^^-func name ^^-type it works on ^^-name of js property
 [@bs.get] external getRemainder: divmodResult => t = "remainder";
 //
-//  Internal function to retrieve the object above.
+//  Internal function to retrieve the fields from the object/dict above.
 //
 [@bs.send]
 external _divmod:
