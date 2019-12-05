@@ -33,7 +33,7 @@ type t;
 // similar to an Object-Oriented language's concept of `class`.
 //
 // So here, `type t` is the BigInteger data structure, packaged with the methods
-// we can to operate on that type.
+// we can use to operate on that type.
 //
 // Because we don't really know (or, honestly, care) about _how_ the BigInteger
 // library implements the BigInteger type, we just declare it here, which means
